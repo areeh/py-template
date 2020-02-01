@@ -27,6 +27,6 @@ repos:
     name: mypy
     stages: [commit]
     language: system
-    entry: poetry run mypy py-template/
+    entry: poetry run mypy pytemplate/
     types: [python]
     pass_filenames: false
