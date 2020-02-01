@@ -1,0 +1,22 @@
+[run]
+branch = True
+omit =
+    *\tests\*
+
+[report]
+exclude_lines =
+    # Re-enable standard no cover
+    pragma: no cover
+
+    # Defensive, not expected to be run
+    raise AssertionError
+    raise NotImplementedError
+
+    # Non-runnable
+    if 0:
+    if __name__ == '__main__':
+    if __name__ == "__main__":
+    if TYPE_CHECKING:
+
+[html]
+test_output\coverage_html_report

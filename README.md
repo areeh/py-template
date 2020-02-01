@@ -1,2 +1,2 @@
 # py-template
-Template Python repo
+Template Python repo with static analyzers

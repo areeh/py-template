@@ -1,0 +1,12 @@
+[flake8]
+# E203: "Whitespace before ':'"
+# E501: "Line too long"
+# W503: "Line break occurred before a binary operator"
+# W504: "Line break occurred after a binary operator"
+# B: Bugbear
+# C: Comprehensions
+# T4: Mypy
+select = B,C,E,F,W,T4,B9
+ignore = E203,E501,W503,W504
+max-line-length = 100
+max-complexity = 18
