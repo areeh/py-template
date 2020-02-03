@@ -1,0 +1,53 @@
+name: Python package
+
+on: [push, pull_request]
+
+jobs:
+  Linting:
+     runs-on: ubuntu-18.04
+     
+     steps:
+       - uses: actions/checkout@v1
+       - name: Set up Python 3.7
+         uses: actions/setup-python@v1
+         with:
+           python-version: 3.7
+       - name: Linting
+         run: |
+           pip install pre-commit
+           pre-commit run --all-files
+  Linux:
+    needs: Linting
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        python-version: [3.7, 3.8]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Get full python version
+      id: full-python-version
+      run: |
+        echo ::set-output name=version::$(python -c "import sys; print('-'.join(str(v) for v in sys.version_info[:3]))")
+    - name: Install and set up Poetry
+      run: |
+        python get-poetry.py --preview -y
+        source $HOME/.poetry/env
+        poetry config virtualenvs.in-project true
+    - name: Set up cache
+      uses: actions/cache@v1
+      with:
+        path: .venv
+        key: venv-${{ runner.os }}-${{ steps.full-python-version.outputs.version }}-${{ hashFiles('**/poetry.lock') }}
+    - name: Install dependencies
+      run: |
+        source $HOME/.poetry/env
+        poetry install
+    - name: Test
+      run: |
+        source $HOME/.poetry/env
+        poetry run pytest -q tests
