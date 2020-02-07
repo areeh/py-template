@@ -1,3 +1,5 @@
+# pre-commit config that uses programs installed on the system
+
 repos:
 - repo: local
   hooks:
