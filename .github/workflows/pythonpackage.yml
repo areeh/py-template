@@ -40,13 +40,13 @@ jobs:
     - name: Install and set up Poetry
       run: |
         curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
-        
+
         # Github Actions specific way to append to system path for all subsequent actions in the current job
         echo "::add-path::$HOME/.poetry/bin"
-        
+
         # Current action still needs to know the path
         source $HOME/.poetry/env
-        
+
         poetry config virtualenvs.in-project true
     - name: Set up cache
       uses: actions/cache@v1
